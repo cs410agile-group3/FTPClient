@@ -37,3 +37,5 @@ In the FtpCli.Test/ directory:
   `$> dotnet test`
 
 > This will run each test file in the directory and output amount of tests passed.
+
+If any issues arise while developing, please message the team on #agile-project in Slack!
