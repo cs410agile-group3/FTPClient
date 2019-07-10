@@ -9,15 +9,15 @@ FtpClient/
   |     Program.cs <- Entry point for commands
   |     FtpCli.cs <- Provides an interface for Program.cs to interact with
   |     Commands/
-  |       |
-  |       --> This is the directory where interfaces for a command will be defined
+  |     |
+  |     |--> This is the directory where interfaces for a command will be defined
   |     Packages/
-  |       |
-  |       --> This is where domains of functionality will be defined. For example, a 'Cli' package would provide methods for interacting with parsing args/routing commands.
+  |     |
+  |     |--> This is where domains of functionality will be defined. For example, a 'Cli' package would provide methods for interacting with parsing args/routing commands.
   |
   |-- FtpCli.Test/
-  |       |
-  |       --> Contains the unit test files
+  |   |
+  |   |--> Contains the unit test files
   |
   ... Others to be defined at a later date ...
 ```
