@@ -20,5 +20,10 @@ namespace FtpCli.UnitTests
 
       Assert.True(echo == "This is totally working...");
     }
+
+    [Fact]
+    public void AlwaysTrue() {
+      Assert.True(_cli.AlwaysTrue());
+    }
   }
 }
