@@ -2,7 +2,7 @@
 
 ### Architecture/Project Structure Overview
 
-`
+```
 FtpClient/
   |
   |-- FtpCli/
@@ -20,7 +20,7 @@ FtpClient/
   |       --> Contains the unit test files
   |
   ... Others to be defined at a later date ...
-`
+```
 
 ### To Run
 
