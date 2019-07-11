@@ -23,23 +23,27 @@ namespace FtpCli
             }
 
             Program FTP = new Program();
-            FTP.server = args[0];
-            FTP.user = args[1];
 
-            Console.WriteLine($"Server: {FTP.server}");
-            Console.WriteLine($"User: {FTP.user}");
+            FTP.parseArgs(args);
+        }
+
+        public void parseArgs(string[] args) {
+            this.server = args[0];
+            this.user = args[1];
+
+            Console.WriteLine($"Server: {this.server}");
+            Console.WriteLine($"User: {this.user}");
 
             if (args.Length > 2) {
-                FTP.commands = new string[args.Length - 2];
-                Array.Copy(args, 2, FTP.commands, 0, args.Length - 2);
+                this.commands = new string[args.Length - 2];
+                Array.Copy(args, 2, this.commands, 0, args.Length - 2);
 
                 Console.Write("Commands: ");
-                foreach (string arg in FTP.commands) {
+                foreach (string arg in this.commands) {
                     Console.Write($"{arg} ");
                 }
                 Console.WriteLine();
             }
-
         }
     }
 }
