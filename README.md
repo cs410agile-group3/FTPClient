@@ -26,7 +26,7 @@ FtpClient/
 
 In the FtpCli/ directory:
 
-  `$> dotnet run`
+  `$> dotnet run [servername] [username] [optional args]`
 
 > This will default run the 'Program.cs' file.
 
