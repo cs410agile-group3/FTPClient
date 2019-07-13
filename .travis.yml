@@ -1,5 +1,6 @@
 language: csharp
 solution: ./FtpClient/FtpClient.sln
+mono: none
 
 script:
   - dotnet test ./FtpClient/FtpCli.Tests/FtpCli.Tests.csproj
