@@ -47,6 +47,10 @@ namespace FtpCli
       if (response == "") {
         return false;
       }
+      string[] responseAsArray = response.Split(" ");
+      if (responseAsArray.Length > 1) {
+        return false;
+      }
       return true;
     }
 
