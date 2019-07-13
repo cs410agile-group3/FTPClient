@@ -1,8 +1,9 @@
 language: csharp
 solution: FtpClient.sln
 install:
-  - nuget restore FtpClient.sln
+  - nuget restore .\FtpClient\FtpClient.sln
   - nuget install xunit.runners -Version 1.9.2 -OutputDirectory testrunner
+
 script:
   - msbuild /p:Configuration=Release FtpClient.sln
   - mono ./testrunner/xunit.runners.1.9.2/tools/xunit.console.clr4.exe ./FtpCli.Tests/bin/Release/FtpCli.Tests.dll
