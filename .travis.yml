@@ -1,7 +1,7 @@
 language: csharp
 solution: FtpClient\FtpClient.sln
 install:
-  - nuget restore .\FtpClient\FtpClient.sln
+  - nuget restore FtpClient\FtpClient.sln
   - nuget install xunit.runners -Version 1.9.2 -OutputDirectory testrunner
 
 script:
