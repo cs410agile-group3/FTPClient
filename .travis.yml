@@ -2,5 +2,9 @@ language: csharp
 solution: ./FtpClient/FtpClient.sln
 mono: none
 
+install:
+  - nuget restore ./FtpClient/FtpClient.sln
+  - nuget install xunit.runners -Version 1.9.2 -OutputDirectory testrunner
+
 script:
-  - dotnet test ./FtpClient/FtpCli.Tests/FtpCli.Tests.csproj
+  - msbuild /p:Configuration=Release ./FtpClient/FtpClient.sln
