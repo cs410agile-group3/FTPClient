@@ -1,5 +1,5 @@
 language: csharp
-solution: ".\FtpClient\FtpClient.sln"
+solution: "FtpClient\FtpClient.sln"
 install:
   - nuget restore .\FtpClient\FtpClient.sln
   - nuget install xunit.runners -Version 1.9.2 -OutputDirectory testrunner
