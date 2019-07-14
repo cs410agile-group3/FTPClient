@@ -11,9 +11,9 @@ namespace FtpCli
     string[] commands;
 
     public Data() {
-      server = "";
-      user = "";
-      commands = null;
+      this.server = "";
+      this.user = "";
+      this.commands = null;
     }
 
     public void setServer(string server) {
