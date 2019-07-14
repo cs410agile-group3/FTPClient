@@ -51,12 +51,7 @@ namespace FtpCli
     }
 
     public void printCommands() {
-      if (this.commands == null) {
-        Console.WriteLine("no commands");
-        return;
-      }
-
-      if (this.commands[0] == "") {
+      if (this.commands == null || this.commands[0] == "") {
         Console.WriteLine("no commands");
         return;
       }
@@ -64,7 +59,7 @@ namespace FtpCli
       foreach (string arg in this.commands) {
         Console.Write($"{arg} ");
       }
-      Console.Write("\n");
+      Console.WriteLine("\n");
     }
   }
 }
