@@ -55,20 +55,5 @@ namespace FtpCli
       }
       return true;
     }
-
-    public void confirmServer() {
-      Console.Write("\nServer: ");
-      this.data.printServer();
-    }
-
-    public void confirmUser() {
-      Console.Write("\nUser: ");
-      this.data.printUser();
-    }
-
-    public void confirmCommands() {
-      Console.Write("\nCommands: ");
-      this.data.printCommands();
-    }
   }
 }

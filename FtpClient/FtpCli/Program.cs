@@ -10,9 +10,9 @@ namespace FtpCli
             Data data = session.initialPrompt(args);
 
             // print values as confirmation
-            session.confirmServer();
-            session.confirmUser();
-            session.confirmCommands();
+            Console.Write($"\nConnecting to {data.getServer()} with username {data.getUser()}");
+            Console.Write("Commands: ");
+            data.printCommands();
         }
     }
 }
