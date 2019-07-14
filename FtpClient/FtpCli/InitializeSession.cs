@@ -12,7 +12,6 @@ namespace FtpCli
         data = new Data();
       }
 
-
     // prompt user for server, username, and commands (if provided)
     public Data initialPrompt(string[] args) {
       string response = "";
@@ -29,8 +28,7 @@ namespace FtpCli
       this.data.setUser(response);
 
       response = this.promptUser("Enter Command (or `Enter` if none): ");
-      string[] responseAsArray = response.Split(" ");
-      this.data.setCommands(responseAsArray);
+      this.data.setCommands(response);
 
       return this.data;
     }

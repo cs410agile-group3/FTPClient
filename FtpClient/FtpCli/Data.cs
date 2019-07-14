@@ -40,9 +40,10 @@ namespace FtpCli
       Console.WriteLine(this.user);
     }
 
-    public void setCommands(string[] args) {
-      this.commands = new string[args.Length];
-      Array.Copy(args, 0, this.commands, 0, args.Length);
+    public void setCommands(string args) {
+      string[] splitArgs = args.Split(" ");
+      this.commands = new string[splitArgs.Length];
+      Array.Copy(splitArgs, 0, this.commands, 0, splitArgs.Length);
     }
 
     public string[] getCommands() {
