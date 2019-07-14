@@ -36,7 +36,8 @@ namespace FtpCli
     public string promptUser(string prompt) {
 
       Console.WriteLine(prompt);
-      return Console.ReadLine();
+      string response = Console.ReadLine();
+      return response.Trim();
     }
 
     // validates that the response contains valid string content
@@ -46,8 +47,10 @@ namespace FtpCli
       if (response == "") {
         return false;
       }
-      string[] responseAsArray = response.Split(" ");
-      if (responseAsArray.Length > 1) {
+
+      // if more than one string value is passed in
+      response.Trim();
+      if (response.Contains(" ")) {
         return false;
       }
       return true;
