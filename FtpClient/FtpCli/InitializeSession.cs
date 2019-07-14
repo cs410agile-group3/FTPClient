@@ -2,6 +2,8 @@ using System;
 
 namespace FtpCli
 {
+  // The IntializeSession class prompts the user for session details
+  // which are stored as a Data object
   public class InitializeSession
   {
       Data data;
