@@ -16,7 +16,6 @@ namespace FtpCli
     public Data initialPrompt(string[] args) {
       string response = "";
 
-      // prompt for server
       do {
         response = this.promptUser("Enter Server: ");
       } while (!validateNonEmptyResponse(response));
