@@ -20,6 +20,13 @@ namespace FtpCli.UnitTests
     }
 
     [Theory]
+    [InlineData("  Name Too Long ")]
+    public void MultiString_ReturnsFalse(string user) 
+    {
+      Assert.False(_session.validateNonEmptyResponse(user));
+    }
+
+    [Theory]
     [InlineData("FtpServer")]
     public void SingleString_ReturnsTrue(string server) 
     {
