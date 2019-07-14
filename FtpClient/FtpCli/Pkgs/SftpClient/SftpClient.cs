@@ -9,7 +9,6 @@ namespace FtpCli.Packages.ClientWrapper
     {
         private SftpClient _client;
         private ConnectionInfo _connection;
-        private delegate void UseCallback(SftpClient client);
 
         // Explicit constructor
         // Should be used in all cases
