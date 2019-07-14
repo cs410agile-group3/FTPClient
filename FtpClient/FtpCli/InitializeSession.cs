@@ -6,28 +6,39 @@ namespace FtpCli
   // which are stored as a Data object
   public class InitializeSession
   {
-      Data data;
+    Data data;
 
-      public InitializeSession() {
-        data = new Data();
+    public InitializeSession() {
+      this.data = new Data();
+    }
+
+    // prompt user for valid server, username, and commands (if provided)
+    public Data initialPrompt(string[] args) {
+      string server = "";
+      string user = "";
+      string commands = "";
+
+      // set any server/user values that were passed through the command line
+      if (args.Length >= 2) {
+        server = args[0];
+        user = args[1];
       }
 
-    // prompt user for server, username, and commands (if provided)
-    public Data initialPrompt(string[] args) {
-      string response = "";
+      // prompt user for valid server value
+      while (!validateNonEmptyResponse(server)) {
+        server = this.promptUser("Enter Server: ");
+      }
+      this.data.setServer(server);
 
-      do {
-        response = this.promptUser("Enter Server: ");
-      } while (!validateNonEmptyResponse(response));
-      this.data.setServer(response);
+      // prompt user for valid username value
+      while (!validateNonEmptyResponse(user)) {
+        user = this.promptUser("Enter Username: ");
+      }
+      this.data.setUser(user);
 
-      do {
-        response = this.promptUser("Enter Username: ");
-      } while (!validateNonEmptyResponse(response));
-      this.data.setUser(response);
-
-      response = this.promptUser("Enter Command (or `Enter` if none): ");
-      this.data.setCommands(response);
+      // prompt for commands
+      commands = this.promptUser("Enter Command (or `Enter` if none): ");
+      this.data.setCommands(commands);
 
       return this.data;
     }
