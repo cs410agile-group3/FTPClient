@@ -6,7 +6,13 @@ namespace FtpCli
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            InitializeSession session = new InitializeSession();
+            Data data = session.initialPrompt(args);
+
+            // print values as confirmation
+            Console.WriteLine($"\nConnecting to {data.getServer()} with username {data.getUser()}");
+            Console.Write("Commands: ");
+            data.printCommands();
         }
     }
 }
