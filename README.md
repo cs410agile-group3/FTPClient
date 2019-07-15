@@ -9,8 +9,8 @@ FtpClient/
   |     Program.cs           <- Entry point for commands
   |     InitializeSession.cs <- Initializes and validates session with user-provided server, user, command details
   |     FtpCli.cs            <- Provides an interface for Program.cs to interact with
+  |     Data.cs              <- Storage class for session data
   |     Commands/
-  |     Data.cs				 <- Storage class for session data
   |     |
   |     |--> This is the directory where interfaces for a command will be defined
   |     Packages/
