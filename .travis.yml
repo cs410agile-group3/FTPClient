@@ -1,9 +1,9 @@
-dist: trusty
+dist: xenial
 sudo: required
 language: csharp
 solution: ./FtpClient/FtpClient.sln
 mono: none
-dotnet: 2.0.0
+dotnet: 2.2.0
 
 script:
   - dotnet restore
