@@ -1,7 +1,7 @@
 language: csharp
 solution: ./FtpClient/FtpClient.sln
 mono: none
-dotnet: 2.1
+dotnet: 2.1.4
 
 install:
   - dotnet restore
