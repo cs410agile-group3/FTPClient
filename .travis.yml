@@ -1,11 +1,11 @@
-dist: xenial
-sudo: required
 language: csharp
 solution: ./FtpClient/FtpClient.sln
 mono: none
+dist: xenial
+sudo: required
 dotnet: 2.2.0
 
 script:
   - dotnet restore
   - dotnet build
-  - dotnet test FtpCli.Tests\FtpCli.Tests.csproj
+  - dotnet test FtpClient/FtpCli.Tests\FtpCli.Tests.csproj
