@@ -10,24 +10,18 @@ namespace ConsoleParser
     public void executeCommand(string command)
     {
       string[] args = command.Split(' ');
+      if (args.Length < 1) {
+        throw new InvalidOperationException($"Could not parse command: {command}");
+      }
       string commandName = args[0];
       bool found = false;
       foreach (ConsoleParserCommand c in commands)
       {
         if (c.commandName == commandName)
         {
-          if (args.Length < 2)
-          {
-            throw new InvalidOperationException("Too few arguments");
-          } else if (args.Length > 2)
-          {
-            List<string> commandArgs = new List<string>();
-            for (int i = 1; i < args.Length; i++) commandArgs.Add(args[i]);
-            c.execute(commandArgs);
-          } else
-          {
-            c.execute(args[1]);
-          }
+          List<string> commandArgs = new List<string>();
+          for (int i = 1; i < args.Length; i++) commandArgs.Add(args[i]);
+          c.execute(commandArgs);
           found = true;
           break;
         }

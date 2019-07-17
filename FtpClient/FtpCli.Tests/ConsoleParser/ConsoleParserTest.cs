@@ -25,7 +25,7 @@ namespace ConsoleParser.UnitTests
         {
             ConsoleParser parser = new ConsoleParser
                 .Builder()
-                .withCommand("command", "some command", (string a) => {})
+                .withCommand("command", "some command", (List<string> a) => {})
                 .build();
             parser.executeCommand("command arg");
         }
@@ -37,7 +37,7 @@ namespace ConsoleParser.UnitTests
             string arg = null;
             ConsoleParser parser = new ConsoleParser
                 .Builder()
-                .withCommand("command", "some command", (string a) => { executed = true; arg = a; })
+                .withCommand("command", "some command", (List<string> a) => { executed = true; arg = a[0]; })
                 .build();
             parser.executeCommand("command arg");
             Assert.True(executed);
@@ -57,6 +57,18 @@ namespace ConsoleParser.UnitTests
                 .build();
             parser.executeCommand("command some arg");
             Assert.Equal(foundArgs, expectedArgs);
+        }
+
+        [Fact]
+        public void executesCommandWithNoArgs()
+        {
+            int argsLength = -1;
+            ConsoleParser parser = new ConsoleParser
+                .Builder()
+                .withCommand("command", "some command", (List<string> a) => { argsLength = a.Count; })
+                .build();
+            parser.executeCommand("command");
+            Assert.Equal(0, argsLength);
         }
     }
 }
