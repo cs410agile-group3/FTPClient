@@ -2,7 +2,9 @@ language: csharp
 solution: ./FtpClient/FtpClient.sln
 install:
   - nuget restore ./FtpClient/FtpClient.sln
+  - nuget install SSH.NET -Version 2016.0.0 
   - nuget install xunit.runners -Version 1.9.2 -OutputDirectory testrunner
+  
 
 script:
   - msbuild /p:Configuration=Release ./FtpClient/FtpClient.sln
