@@ -1,13 +1,11 @@
 language: csharp
 solution: ./FtpClient/FtpClient.sln
+mono: none
 dotnet: 2.1
 
 install:
-  - nuget restore ./FtpClient/FtpClient.sln
-  - nuget install SSH.NET -Version 2016.0.0 
-  - nuget install xunit.runners -Version 1.9.2 -OutputDirectory testrunner
-  
+  - dotnet restore
 
 script:
-  - msbuild /p:Configuration=Release ./FtpClient/FtpClient.sln
-  - mono ./testrunner/xunit.runners.1.9.2/tools/xunit.console.clr4.exe ./FtpCli.Tests/bin/Release/FtpCli.Tests.dll
+  - dotnet build
+  - dotnet test .\FtpClient\FtpCli.Tests\FtpCli.Tests.csproj
