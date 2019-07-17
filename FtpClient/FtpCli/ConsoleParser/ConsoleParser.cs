@@ -42,12 +42,6 @@ namespace ConsoleParser
         return this;
       }
 
-      public Builder withCommand(string commandName, string helpText, Action<string> action)
-      {
-        parser.commands.Add(new ConsoleParserCommand(commandName, helpText, action));
-        return this;
-      }
-
       public ConsoleParser build()
       {
         return this.parser;
