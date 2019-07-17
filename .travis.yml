@@ -7,5 +7,6 @@ install:
   - dotnet restore
 
 script:
+  - cd FtpClient
   - dotnet build
-  - dotnet test .\FtpClient\FtpCli.Tests\FtpCli.Tests.csproj
+  - dotnet test FtpCli.Tests\FtpCli.Tests.csproj
