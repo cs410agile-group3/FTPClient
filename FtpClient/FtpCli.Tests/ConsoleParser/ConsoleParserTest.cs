@@ -86,5 +86,18 @@ namespace ConsoleParser.UnitTests
             parser.executeCommand("mv some arg");
             Assert.Equal(3, calls);
         }
+
+        [Fact]
+        public void printsHelp()
+        {
+            int calls = 0;
+            ConsoleParser parser = new ConsoleParser
+                .Builder()
+                .withCommand("command", "some command", (List<string> a) => { calls += 1; })
+                .withCommand("ls", "some ls", (List<string> a) => { calls += 1; })
+                .withCommand("mv", "some mv", (List<string> a) => { calls += 1; })
+                .build();
+            Assert.Equal("command - some command\nls - some ls\nmv - some mv\n", parser.getHelp());
+        }
     }
 }
