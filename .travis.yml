@@ -1,7 +1,9 @@
+dist: trusty
+sudo: required
 language: csharp
 solution: ./FtpClient/FtpClient.sln
 mono: none
-dotnet: 2.1.4
+dotnet: 2.0.0
 
 install:
   - dotnet restore
