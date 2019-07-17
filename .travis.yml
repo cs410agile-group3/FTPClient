@@ -5,10 +5,7 @@ solution: ./FtpClient/FtpClient.sln
 mono: none
 dotnet: 2.0.0
 
-install:
-  - dotnet restore
-
 script:
-  - cd FtpClient
+  - dotnet restore
   - dotnet build
   - dotnet test FtpCli.Tests\FtpCli.Tests.csproj
