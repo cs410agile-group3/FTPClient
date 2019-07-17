@@ -70,5 +70,21 @@ namespace ConsoleParser.UnitTests
             parser.executeCommand("command");
             Assert.Equal(0, argsLength);
         }
+
+        [Fact]
+        public void canHoldManyCommands()
+        {
+            int calls = 0;
+            ConsoleParser parser = new ConsoleParser
+                .Builder()
+                .withCommand("command", "some command", (List<string> a) => { calls += 1; })
+                .withCommand("ls", "some command", (List<string> a) => { calls += 1; })
+                .withCommand("mv", "some command", (List<string> a) => { calls += 1; })
+                .build();
+            parser.executeCommand("command some arg");
+            parser.executeCommand("ls some arg");
+            parser.executeCommand("mv some arg");
+            Assert.Equal(3, calls);
+        }
     }
 }
