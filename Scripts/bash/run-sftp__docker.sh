@@ -5,6 +5,11 @@ runImg () {
     echo "Error: Must provide a port number. Usage: ./run-sftp__docker.sh [port]"
     return
   fi
+
+  if [ $1 == "-h" ] || [ $1 == "--help" ]; then
+    echo "Usage: ./run-sftp__docker.sh [port]"
+    return
+  fi
   # Passes a port
   docker run -d -p $1:22 mysecureshell
 }

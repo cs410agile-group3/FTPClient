@@ -3,7 +3,10 @@
 connect () {
   username=$1
   port=$2
-  
+
+
+  echo $port
+
   if [ -z $username ]; then
     echo "Error: no username provided."
     echo "Usage: ./connect-sftp.sh [username] [port: default 7667]"
@@ -25,4 +28,4 @@ connect () {
   sftp -P $port $username@127.0.0.1
 }
 
-connect $1
+connect $1 $2
