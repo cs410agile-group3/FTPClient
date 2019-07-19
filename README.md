@@ -35,9 +35,11 @@ rootDir/
 
 In the FtpCli/ directory:
 
-  `$> dotnet run [servername] [username] [optional args]`
+  `$> dotnet run`
 
-> This will default run the 'Program.cs' file.
+> This will default run the 'Program.cs' file. You can also run the program with server and user parameters:
+
+  `$> dotnet run [servername] [username]`
 
 ### To Test
 
