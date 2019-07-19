@@ -25,8 +25,7 @@ namespace FtpCli.Packages.ClientWrapper
              } catch (Exception err) 
              {
                 Console.WriteLine($"Unable to connect to {host}:{port}");
-                Console.WriteLine(err.ToString());
-                Environment.Exit(-1);
+                throw new Exception(err.ToString());
              }
         }
 
