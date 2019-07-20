@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Text;
 
 namespace ConsoleParser
 {
@@ -27,6 +28,16 @@ namespace ConsoleParser
         }
       }
       if (!found) throw new InvalidOperationException($"The command {commandName} was not found");
+    }
+
+    public string getHelp()
+    {
+      StringBuilder builder = new StringBuilder();
+      foreach (ConsoleParserCommand command in commands)
+      {
+        builder.Append($"{command.commandName} - {command.helpText}\n");
+      }
+      return builder.ToString();
     }
 
     public class Builder
