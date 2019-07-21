@@ -8,11 +8,9 @@ namespace FtpCli
         {
             InitializeSession session = new InitializeSession();
             Data data = session.initialPrompt(args);
+            Packages.ClientWrapper.Client connection = new Packages.ClientWrapper.Client(data.Server, data.Port, data.User, data.Password);
 
-            // print values as confirmation
-            Console.WriteLine($"\nConnecting to {data.getServer()} with username {data.getUser()}");
-            Console.Write("Commands: ");
-            data.printCommands();
+
         }
     }
 }

@@ -29,6 +29,22 @@ namespace FtpCli.UnitTests
     }
 
     [Theory]
+    [InlineData("8080")]
+    public void PortSetterAndGetter_SetsCorrectValue(string port) 
+    { 
+      _data.setPort(port);
+      Assert.Equal("8080", _data.getPort());
+    }
+
+    [Theory]
+    [InlineData("SaltYourPasswordInReality")]
+    public void PasswordSetterAndGetter_SetsCorrectValue(string password) 
+    { 
+      _data.setPassword(password);
+      Assert.Equal("SaltYourPasswordInReality", _data.getPassword());
+    }
+
+    [Theory]
     [InlineData("randomCommands arbitrary unexpected handled correctly")]
     public void CommandSetterAndGetter_SetsCorrectValue(string commands) 
     { 
@@ -36,6 +52,5 @@ namespace FtpCli.UnitTests
       string[] expectedCommands = new string[5]{"randomCommands", "arbitrary", "unexpected", "handled", "correctly"};
       Assert.Equal(expectedCommands, _data.getCommands());
     }
-
   }
 }

@@ -11,7 +11,7 @@ namespace FtpCli.UnitTests.Connect
     {
         private readonly Client _client;
         private string host = "127.0.0.1";
-        private int port = 7667;
+        private int port = 8080;
         private string username = "mssuser";
         private string passwd = "mssuser";
 
