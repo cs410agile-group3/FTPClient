@@ -9,7 +9,9 @@ rootDir/
     |
     |-- FtpCli/
     |     Program.cs <- Entry point for commands
-    |     FtpCli.cs <- Provides an interface for Program.cs to interact with
+    |     FtpCli.cs  <- Provides an interface for Program.cs to interact with
+    |     InitializeSession.cs <- Initializes session with user-provided input
+    |     Data.cs    <- Storage class for session data
     |     Commands/
     |     |
     |     |--> This is the directory where interfaces for a command will be defined
@@ -37,9 +39,9 @@ In the FtpCli/ directory:
 
   `$> dotnet run`
 
-> This will default run the 'Program.cs' file. You can also run the program with server and user parameters:
+> This will default run the 'Program.cs' file. You can also run the program with the following parameters. An invalid number of parameters will result in user prompts for login parameters:
 
-  `$> dotnet run [servername] [username]`
+  `$> dotnet run [servername] [port] [username] [password]`
 
 ### To Test
 
