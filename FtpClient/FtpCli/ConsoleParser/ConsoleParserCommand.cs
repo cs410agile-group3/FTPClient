@@ -6,7 +6,7 @@ namespace ConsoleParser
     public class ConsoleParserCommand
     {
         public string commandName { get; }
-        private string helpText { get; set; }
+        public string helpText { get; }
         private Action<List<string>> manyArgsAction;
 
         public ConsoleParserCommand(string commandName, string helpText, Action<List<string>> action)
