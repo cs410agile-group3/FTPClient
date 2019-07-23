@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace FtpCli
 {
@@ -59,6 +60,30 @@ namespace FtpCli
       foreach (string arg in this.commands) {
         Console.Write($"{arg} ");
       }
+      Console.WriteLine("\n");
+    }
+    public void executeCommands() {
+      Cli cli = new Cli();
+      ConsoleParser.ConsoleParser parser = new ConsoleParser.ConsoleParser
+                .Builder()
+                .withCommand("echo", "Echo a command to the screen.", (List<string> a) => {Console.WriteLine(cli.Echo(a[0]));})
+                .withCommand("localrename", "Rename a local file.", (List<string> a) => {Console.WriteLine(cli.LocalRename(a[0],a[1]));})
+                .withCommand("lls", "List local files.", (List<string> a) => {Console.WriteLine(cli.LLS(a[0]));})
+                .build();
+
+      if (this.commands == null || this.commands[0] == "") {
+        Console.WriteLine("no commands");
+        return;
+      }
+
+      string commandToExecute = string.Join(" ", this.commands);
+      Console.WriteLine(commandToExecute + "\n");
+      parser.executeCommand(commandToExecute);
+
+      //foreach (string arg in this.commands) {
+      //  Console.Write($"{arg} ");
+
+      //}
       Console.WriteLine("\n");
     }
   }

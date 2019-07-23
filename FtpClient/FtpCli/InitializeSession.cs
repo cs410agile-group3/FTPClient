@@ -48,6 +48,7 @@ namespace FtpCli
 
       Console.WriteLine(prompt);
       string response = Console.ReadLine();
+      Console.WriteLine("The response to the prompt is: "+response);
       return response.Trim();
     }
 

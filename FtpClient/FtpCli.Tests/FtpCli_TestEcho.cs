@@ -16,9 +16,9 @@ namespace FtpCli.UnitTests
     [InlineData("This is totally working...")]
     public void EchosString(string msg) 
     {
-      string echo = _cli.Echo(msg);
+      string echoResult = _cli.Echo(msg);
 
-      Assert.True(echo == "This is totally working...");
+      Assert.Equal("This is totally working...",echoResult);
     }
 
     [Fact]
