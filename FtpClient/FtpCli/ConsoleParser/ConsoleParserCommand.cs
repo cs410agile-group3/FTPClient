@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace ConsoleParser
+namespace ConsoleParserNamespace
 {
     public class ConsoleParserCommand
     {

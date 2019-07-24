@@ -1,9 +1,9 @@
 using System;
 using Xunit;
-using ConsoleParser;
+using ConsoleParserNamespace;
 using System.Collections.Generic;
 
-namespace ConsoleParser.UnitTests
+namespace ConsoleParserNamespace.UnitTests
 {
     public class ConsoleParserTest
     {
