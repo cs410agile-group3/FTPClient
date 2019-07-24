@@ -35,6 +35,10 @@ rootDir/
 
 ### To Run
 
+Setup `docker` per the [docker usage](#docker)  instructions.
+
+Start the server by running the docker script `./run-sftp__docker.sh 8080`
+
 In the FtpCli/ directory:
 
   `$> dotnet run`
@@ -42,6 +46,10 @@ In the FtpCli/ directory:
 > This will default run the 'Program.cs' file. You can also run the program with the following parameters. An invalid number of parameters will result in user prompts for login parameters:
 
   `$> dotnet run [servername] [port] [username] [password]`
+
+Example Usage:
+
+  `$> dotnet run 127.0.0.1 8080 mssuser mssuser`
 
 ### To Test
 
@@ -53,7 +61,7 @@ In the FtpCli.Test/ directory:
 
 If any issues arise while developing, please message the team on #agile-project in Slack!
 
-### Docker Usage
+### [Docker Usage](#docker)
 
 In this project, there are some scripts in the `Scripts/` folder which are essentially wrappers around docker commands. There names correspond the the functionality they each try to to provide.
 
