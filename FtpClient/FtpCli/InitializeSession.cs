@@ -3,22 +3,15 @@ using System;
 namespace FtpCli
 {
   // The IntializeSession class prompts the user for session details
-  // which are stored as a Data object
-  public class InitializeSession
+  public static class InitializeSession
   {
-    Data data;
-
-    public InitializeSession() {
-      this.data = new Data();
-    }
 
     // prompt user for valid server, username, and command (if provided)
-    public Data initialPrompt(string[] args) {
+    public static Packages.ClientWrapper.Client initialize(string[] args) {
       string server = "";
       string port = "";
       string user = "";
       string password = "";
-      string command = "";
 
       // set any server/user values that were passed through the command line
       int length = args.Length;
@@ -32,44 +25,32 @@ namespace FtpCli
 
       // prompt user for valid server value
       while (!validateNonEmptyResponse(server)) {
-        server = this.promptUser("Enter Server: ");
+        server = promptUser("Enter Server: ");
       }
-      this.data.Server = server;
 
       // prompt user for valid port
       while (!validateNonEmptyResponse(port)) {
-        port = this.promptUser("Enter Port: ");
+        port = promptUser("Enter Port: ");
       }
-      this.data.Port = Convert.ToInt32(port);
 
       // prompt user for valid username value
       while (!validateNonEmptyResponse(user)) {
-        user = this.promptUser("Enter Username: ");
+        user = promptUser("Enter Username: ");
       }
-      this.data.User = user;
 
       // prompt user for valid password
       while (!validateNonEmptyResponse(password)) {
-        password = this.promptUser("Enter Password: ");
+        password = promptUser("Enter Password: ");
       }
-      this.data.Password = password;
 
       // print values as confirmation
-      Console.WriteLine($"Connecting {this.data.User} to {this.data.Server}:{this.data.Port}");
+      Console.WriteLine($"Connecting {user} to {server}:{port}");
 
-      // prompt for command
-      command = this.promptUser("\nEnter Command (or `Enter` if none): ");
-      this.data.setCommand(command);
-
-      // print values as confirmation
-      Console.Write("Command: ");
-      this.data.printCommand();
-
-      return this.data;
+      return new Packages.ClientWrapper.Client(server, Convert.ToInt32(port), user, password);
     }
 
     // prompts user and returns input
-    public string promptUser(string prompt) {
+    public static string promptUser(string prompt) {
 
       Console.WriteLine(prompt);
       string response = Console.ReadLine();
@@ -77,7 +58,7 @@ namespace FtpCli
     }
 
     // validates that the response contains valid string content
-    public bool validateNonEmptyResponse(string response) 
+    public static bool validateNonEmptyResponse(string response) 
     {
       // incorrect number of values passed in
       if (response == "") {

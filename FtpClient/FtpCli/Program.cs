@@ -6,11 +6,11 @@ namespace FtpCli
     {
         static void Main(string[] args)
         {
-            InitializeSession session = new InitializeSession();
-            Data data = session.initialPrompt(args);
-            Packages.ClientWrapper.Client connection = new Packages.ClientWrapper.Client(data.Server, data.Port, data.User, data.Password);
+            // start a connection based on user input
+            Packages.ClientWrapper.Client connection = InitializeSession.initialize(args);
 
-
+            // prompt
+            Console.Write(">> ");
         }
     }
 }
