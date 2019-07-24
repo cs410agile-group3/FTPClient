@@ -22,7 +22,7 @@ namespace FtpCli.Packages.ClientWrapper
 
              try {
                 _client.Connect();
-                Console.WriteLine("Connection successful!");
+                Console.WriteLine("Connection successful!\n");
              } catch (Exception err) 
              {
                 Console.WriteLine($"Unable to connect to {host}:{port}");
