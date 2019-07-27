@@ -51,6 +51,7 @@ namespace FtpCli.Packages.ClientWrapper
 
         public void Rename(String source, String destination){
             _client.RenameFile(source,destination);
+        }
 
         public void RemoteDeleteFile(string filename)
         {
@@ -60,6 +61,17 @@ namespace FtpCli.Packages.ClientWrapper
         public void RemoteDeleteDirectory(string dirname)
         {
             _client.DeleteDirectory(dirname);
+
+        }
+
+        public void ChangePermissions(string path, short mode)
+        {
+            try{
+                _client.ChangePermissions(path, mode);
+            }
+            catch{
+                Console.WriteLine("File Not Found");
+            }
 
         }
     }

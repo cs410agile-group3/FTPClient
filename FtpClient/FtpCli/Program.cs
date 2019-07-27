@@ -76,6 +76,10 @@ namespace FtpCli
                     }
                 })
 
+                .withCommand("chmod", "exits the program", (List<string> chmodArgs) => {
+                    connection.ChangePermissions(chmodArgs[0], Convert.ToInt16(chmodArgs[1]));
+                })
+
 
                 .build();
             while (true) {
