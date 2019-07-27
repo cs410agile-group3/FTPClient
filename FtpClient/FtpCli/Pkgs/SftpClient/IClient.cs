@@ -4,5 +4,6 @@ namespace FtpCli.Packages.ClientWrapper
     {
         void Connect();
         void Disconnect();
+
     }
 }
