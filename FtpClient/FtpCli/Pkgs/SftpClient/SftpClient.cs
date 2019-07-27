@@ -47,9 +47,20 @@ namespace FtpCli.Packages.ClientWrapper
         {
             _client.Disconnect();
         }
+        
 
         public void Rename(String source, String destination){
             _client.RenameFile(source,destination);
+
+        public void RemoteDeleteFile(string filename)
+        {
+            _client.DeleteFile(filename);
+        }
+
+        public void RemoteDeleteDirectory(string dirname)
+        {
+            _client.DeleteDirectory(dirname);
+
         }
     }
 }
