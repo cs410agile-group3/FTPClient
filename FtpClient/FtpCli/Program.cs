@@ -16,6 +16,24 @@ namespace FtpCli
                     connection.Disconnect();
                     Environment.Exit(0);
                 })
+
+
+                .withCommand("rename","renames a file",(List<string>exitArgs)=>{
+                    Console.WriteLine("Enter in the file you want to rename");
+                    String source = Console.ReadLine();
+                    if(source.Length == 0){
+                        Console.WriteLine("File name entered is empty");
+                        Environment.Exit(1); 
+                    }
+                    Console.WriteLine("Enter in the new file name");
+                    String dest = Console.ReadLine();
+                    if(dest.Length == 0){
+                        Console.WriteLine("Destination File name entered is empty");
+                        Environment.Exit(1); 
+                    }
+                    connection.Rename(source, dest);
+                })
+
                 .withCommand("echo", "print argument to screen", (List<string> echoArgs) => {
                     Console.WriteLine(echoArgs[0]);
                 })
@@ -57,6 +75,7 @@ namespace FtpCli
                         }
                     }
                 })
+
 
                 .build();
             while (true) {
