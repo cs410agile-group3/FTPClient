@@ -30,7 +30,7 @@ namespace FtpCli
                         Console.WriteLine("Destination File name entered is empty");
                         Environment.Exit(1); 
                     }
-                    System.IO.File.Move(source, dest);
+                    connection.Rename(source, dest);
                 })
                 .build();
             while (true) {

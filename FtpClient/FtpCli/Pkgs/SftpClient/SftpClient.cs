@@ -47,5 +47,9 @@ namespace FtpCli.Packages.ClientWrapper
         {
             _client.Disconnect();
         }
+
+        public void Rename(String source, String destination){
+            _client.RenameFile(source,destination);
+        }
     }
 }
