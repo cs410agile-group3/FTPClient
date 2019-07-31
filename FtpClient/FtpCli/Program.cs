@@ -77,6 +77,14 @@ namespace FtpCli
                         connection.ListRemote(".");
                     } else connection.ListRemote(lsargs[0]);
                 })
+                .withCommand(
+                    "get",
+                    "get [src] [dest] : Gets file from remote (src) and writes to local (dest)",
+                    (List<string> getArgs) => {
+                        if (getArgs.Count != 2) throw new Exception("Must provide source and destination");
+                        connection.GetFile(getArgs[0], getArgs[1]);
+                    }
+                )
                 .withCommand("chmod", "exits the program", (List<string> chmodArgs) => {
                     connection.ChangePermissions(chmodArgs[0], Convert.ToInt16(chmodArgs[1]));
                 })

@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using Renci.SshNet;
 using Renci.SshNet.Sftp;
 
@@ -83,6 +84,19 @@ namespace FtpCli.Packages.ClientWrapper
                 }
             } catch {
                 Console.WriteLine($"Could not find directory {path}");
+            }
+        }
+
+        public void GetFile(string srcPath, string destPath)
+        {
+            try {
+                using(var file = File.OpenWrite(destPath)) {
+                    _client.DownloadFile(srcPath, file);
+                }
+                Console.WriteLine($"Wrote {srcPath} to {destPath}");
+            } catch {
+                File.Delete(destPath);
+                Console.WriteLine($"Could not get file {srcPath} and write to {destPath}");
             }
         }
     }
