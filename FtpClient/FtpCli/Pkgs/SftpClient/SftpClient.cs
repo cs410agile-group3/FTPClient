@@ -95,6 +95,7 @@ namespace FtpCli.Packages.ClientWrapper
                 }
                 Console.WriteLine($"Wrote {srcPath} to {destPath}");
             } catch {
+                File.Delete(destPath);
                 Console.WriteLine($"Could not get file {srcPath} and write to {destPath}");
             }
         }
