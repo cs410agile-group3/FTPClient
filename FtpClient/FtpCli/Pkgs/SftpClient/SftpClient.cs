@@ -99,5 +99,19 @@ namespace FtpCli.Packages.ClientWrapper
                 Console.WriteLine($"Could not get file {srcPath} and write to {destPath}");
             }
         }
+
+        public void PutFile(string srcPath, string destPath) 
+        {
+            try {
+                using(var file = File.OpenWrite(destPath)) {
+                    _client.DownloadFile(srcPath, file);
+                }
+                Console.WriteLine($"Wrote {srcPath} to {destPath}");
+            } catch {
+                File.Delete(destPath);
+                Console.WriteLine($"Could not put file {srcPath} and write to {destPath}");
+            }
+
+        }
     }
 }
