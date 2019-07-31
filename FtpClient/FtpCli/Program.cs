@@ -16,8 +16,6 @@ namespace FtpCli
                     connection.Disconnect();
                     Environment.Exit(0);
                 })
-
-
                 .withCommand("rename","renames a file",(List<string>exitArgs)=>{
                     Console.WriteLine("Enter in the file you want to rename");
                     String source = Console.ReadLine();
@@ -33,7 +31,6 @@ namespace FtpCli
                     }
                     connection.Rename(source, dest);
                 })
-
                 .withCommand("echo", "print argument to screen", (List<string> echoArgs) => {
                     Console.WriteLine(echoArgs[0]);
                 })
@@ -75,12 +72,14 @@ namespace FtpCli
                         }
                     }
                 })
-
+                .withCommand("ls", "lists files and directories in path on remote", (List<string> lsargs) => {
+                    if (lsargs.Count == 0) {
+                        connection.ListRemote(".");
+                    } else connection.ListRemote(lsargs[0]);
+                })
                 .withCommand("chmod", "exits the program", (List<string> chmodArgs) => {
                     connection.ChangePermissions(chmodArgs[0], Convert.ToInt16(chmodArgs[1]));
                 })
-
-
                 .build();
             while (true) {
                 try {

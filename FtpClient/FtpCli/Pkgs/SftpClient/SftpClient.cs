@@ -74,5 +74,16 @@ namespace FtpCli.Packages.ClientWrapper
             }
 
         }
+
+        public void ListRemote(string path)
+        {
+            try {
+                foreach (var file in _client.ListDirectory(path)) {
+                    Console.WriteLine(file.Name);
+                }
+            } catch {
+                Console.WriteLine($"Could not find directory {path}");
+            }
+        }
     }
 }
