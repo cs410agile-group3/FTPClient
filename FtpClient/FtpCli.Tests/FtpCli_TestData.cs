@@ -4,6 +4,7 @@ using Xunit;
 
 namespace FtpCli.UnitTests
 {
+/*
   public class FtpCli_TestData
   {
     private readonly Data _data;
@@ -53,4 +54,5 @@ namespace FtpCli.UnitTests
       Assert.Equal(expectedCommands, _data.getCommand());
     }
   }
+  */
 }
