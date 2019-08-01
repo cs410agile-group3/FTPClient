@@ -103,12 +103,11 @@ namespace FtpCli.Packages.ClientWrapper
         public void PutFile(string srcPath, string destPath) 
         {
             try {
-                using(var file = File.OpenWrite(destPath)) {
-                    _client.DownloadFile(srcPath, file);
+                using(var file = File.OpenRead(destPath)) {
+                    _client.UploadFile(file, srcPath);
                 }
                 Console.WriteLine($"Wrote {srcPath} to {destPath}");
             } catch {
-                File.Delete(destPath);
                 Console.WriteLine($"Could not put file {srcPath} and write to {destPath}");
             }
 
