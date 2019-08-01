@@ -86,6 +86,14 @@ namespace FtpCli
                     }
                 )
                 .withCommand(
+                    "getmulti",
+                    "get [src] : Gets multiple files from remote (src) and writes the files with the same names to local",
+                    (List<string> getMultiArgs) => {
+                        if (getMultiArgs.Count < 1) throw new Exception("Must provide at least one remote file to get");
+                        connection.GetMultiFiles(getMultiArgs);
+                    }
+                )
+                .withCommand(
                     "put",
                     "put [src] [dest] : Puts file from local (src) and writes it to remote (dest)",
                     (List<string> putArgs) => {

@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using Renci.SshNet;
 using Renci.SshNet.Sftp;
+using System.Collections.Generic;
 
 namespace FtpCli.Packages.ClientWrapper
 {
@@ -97,6 +98,20 @@ namespace FtpCli.Packages.ClientWrapper
             } catch {
                 File.Delete(destPath);
                 Console.WriteLine($"Could not get file {srcPath} and write to {destPath}");
+            }
+        }
+
+        public void GetMultiFiles(List<string> srcPath)
+        {
+            try {
+                foreach (string src in srcPath) {
+                    using(var file = File.OpenWrite(src)) {
+                        _client.DownloadFile(src, file);
+                    }
+                    Console.WriteLine($"Wrote remote {src} to local {src}");
+                }
+            } catch {
+                Console.WriteLine($"Could not get file {srcPath} and write to local");
             }
         }
 
