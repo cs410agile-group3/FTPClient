@@ -5,6 +5,7 @@ namespace FtpCli.Pkgs.Logger
     // Main functions available to a user
     //
     // Type: pulic
+    string FilePath();
     void Log(string cmd);
     string PrevLogItem();
     string NextLogItem();

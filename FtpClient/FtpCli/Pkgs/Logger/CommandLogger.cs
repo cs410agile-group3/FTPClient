@@ -1,3 +1,6 @@
+using System;
+using System.IO;
+
 namespace FtpCli.Pkgs.Logger
 {
   // This will append to the end of
@@ -8,27 +11,43 @@ namespace FtpCli.Pkgs.Logger
     // the logger is currently reading
     private int _cursor;
     private int _numFileLines;
-    private string _homeDir;
-    
+    // *nix: _logFilePath = $HOME/.config
+    // Windows: Users ApplicationData folder (don't know the path)
+    private string _logFilePath;
+
     public CommandLogger()
     {
-      _homeDir = _findHomeDir();
+      _logFilePath = _findLogFilePath();
       _cursor = 0;
       _numFileLines = 0;
     }
 
     ~CommandLogger()
     {
-      _cleanHomeDir();
+      _cleanLogFilePath();
     }
 
-    private string _findHomeDir()
+    private string _findLogFilePath()
     {
       // Find home dir
-      return "";
+      string appDataDir = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+      string logDirPath = appDataDir + "/ftpcli-410/";
+      string logFilePath = logDirPath + ".history";
+
+      if(!Directory.Exists(logDirPath))
+      {
+        Directory.CreateDirectory(logDirPath);
+      }
+
+      if(!File.Exists(logFilePath))
+      {
+        File.Create(logFilePath);
+      }
+     
+      return logFilePath;
     }
 
-    private void _cleanHomeDir()
+    private void _cleanLogFilePath()
     {
       // Delete the file
     }
@@ -36,6 +55,7 @@ namespace FtpCli.Pkgs.Logger
     private void _writeDataToFile(string cmd)
     {
       // Write the command to the specified file
+       
     }
 
     private string _dataAtCursor()
@@ -65,6 +85,11 @@ namespace FtpCli.Pkgs.Logger
         return;
       }
       _cursor -= 1; 
+    }
+
+    public string FilePath()
+    {
+      return _logFilePath;
     }
 
     public void Log(string cmd)
