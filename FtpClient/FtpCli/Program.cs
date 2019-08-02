@@ -85,6 +85,21 @@ namespace FtpCli
                         connection.GetFile(getArgs[0], getArgs[1]);
                     }
                 )
+                .withCommand(
+                    "getmulti",
+                    "get [src] : Gets multiple files from remote (src) and writes the files with the same names to local",
+                    (List<string> getMultiArgs) => {
+                        if (getMultiArgs.Count < 1) throw new Exception("Must provide at least one remote file to get");
+                        connection.GetMultiFiles(getMultiArgs);
+                    }
+                )
+                .withCommand(
+                    "put",
+                    "put [src] [dest] : Puts file from local (src) and writes it to remote (dest)",
+                    (List<string> putArgs) => {
+                        if (putArgs.Count != 2) throw new Exception("Must provide source and destination");
+                        connection.PutFile(putArgs[0], putArgs[1]);
+                 })
                 .withCommand("chmod", "exits the program", (List<string> chmodArgs) => {
                     connection.ChangePermissions(chmodArgs[0], Convert.ToInt16(chmodArgs[1]));
                 })
