@@ -127,5 +127,24 @@ namespace FtpCli.Packages.ClientWrapper
             }
 
         }
+
+        public void PutMultipleFile(List<string> putArgs) 
+        {   
+            string dest = putArgs[putArgs.Count - 1];
+
+            try {
+                foreach (string src in putArgs) {
+
+                    if (src != dest){
+                        using(var file = File.OpenWrite(dest)) {
+                            _client.UploadFile(file, src);
+                            Console.WriteLine($"Wrote {src} to {dest}");
+                        }
+                    }
+                }
+            } catch {
+                Console.WriteLine($"Files or destination do not exist.");
+            }
+        }
     }
 }
