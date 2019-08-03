@@ -1,5 +1,8 @@
 using System;
 using System.IO;
+using System.Collections;
+using Renci.SshNet;
+
 
 namespace FtpCli
 {
@@ -43,5 +46,6 @@ namespace FtpCli
       }
       return s;
     }
+    
   }
 }

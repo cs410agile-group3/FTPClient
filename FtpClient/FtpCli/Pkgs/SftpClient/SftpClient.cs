@@ -3,6 +3,7 @@ using System.IO;
 using Renci.SshNet;
 using Renci.SshNet.Sftp;
 using System.Collections.Generic;
+using System.Collections;
 
 namespace FtpCli.Packages.ClientWrapper
 {
@@ -122,10 +123,58 @@ namespace FtpCli.Packages.ClientWrapper
                     _client.UploadFile(file, srcPath);
                 }
                 Console.WriteLine($"Wrote {srcPath} to {destPath}");
-            } catch {
+            } catch(Exception e) {
+                Console.WriteLine("Error Message:" + e.Message);
                 Console.WriteLine($"Could not put file {srcPath} and write to {destPath}");
             }
 
         }
+
+        public void PutDirectory(string srcPath, string destPath) 
+        {
+            try {
+                //using(var file = File.OpenRead(destPath)) {
+                //    _client.UploadFile(file, srcPath);
+                //}
+                UploadDirectory(_client,srcPath,destPath);
+                Console.WriteLine($"Wrote {srcPath} to {destPath}");
+            } catch(Exception e) {
+                //Console.WriteLine("Error Message:" + e.Message);
+                //Console.WriteLine($"Could not put file {srcPath} and write to {destPath}");
+            }
+
+        }
+
+
+    void UploadDirectory(SftpClient client, string localPathup, string remotePathup)
+    {
+      Console.WriteLine("Uploading directory {0} to {1}", localPathup, remotePathup);
+
+      IEnumerable infos = new DirectoryInfo(localPathup).EnumerateFileSystemInfos();
+      foreach (FileSystemInfo info in infos)
+      {
+        if (info.Attributes.HasFlag(FileAttributes.Directory))
+        {
+          string subPath = remotePathup + "/" + info.Name;
+          if (!client.Exists(subPath))
+            {
+                client.CreateDirectory(subPath);
+            }
+            UploadDirectory(client, info.FullName, remotePathup + "/" + info.Name);
+        }
+        else
+        {
+            using (Stream fileStream = new FileStream(info.FullName, FileMode.Open))
+            {
+                Console.WriteLine(
+                    "Uploading {0} ({1:N0} bytes)",
+                    info.FullName, ((FileInfo)info).Length);
+
+                client.UploadFile(fileStream, remotePathup + "/" + info.Name);
+            }
+        }
+    }
+    }
+
     }
 }

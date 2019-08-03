@@ -99,7 +99,16 @@ namespace FtpCli
                     (List<string> putArgs) => {
                         if (putArgs.Count != 2) throw new Exception("Must provide source and destination");
                         connection.PutFile(putArgs[0], putArgs[1]);
-                 })
+                    }
+                 )
+                .withCommand(
+                    "putdir",
+                    "putdir [src] [dest] : Puts directory from local (src) and writes it to remote (dest)",
+                    (List<string> putArgs) => {
+                        if (putArgs.Count != 2) throw new Exception("Must provide source and destination");
+                        connection.PutDirectory(putArgs[0], putArgs[1]);
+                    }
+                 )
                 .withCommand("chmod", "exits the program", (List<string> chmodArgs) => {
                     connection.ChangePermissions(chmodArgs[0], Convert.ToInt16(chmodArgs[1]));
                 })
