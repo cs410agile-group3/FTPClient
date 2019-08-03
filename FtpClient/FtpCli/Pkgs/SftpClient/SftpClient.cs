@@ -136,10 +136,7 @@ namespace FtpCli.Packages.ClientWrapper
                 foreach (string src in putArgs) {
 
                     if (src != dest){
-                        using(var file = File.OpenWrite(dest)) {
-                            _client.UploadFile(file, src);
-                            Console.WriteLine($"Wrote {src} to {dest}");
-                        }
+                        PutFile(src, dest);
                     }
                 }
             } catch {
