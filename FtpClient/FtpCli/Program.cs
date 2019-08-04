@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Timers;
 using ConsoleParserNamespace;
 using System.Collections.Generic;
 
@@ -6,10 +7,23 @@ namespace FtpCli
 {
     class Program
     {
+        // Timer to shutdown program if idle
+        private static Timer timer;
+
+        private static Packages.ClientWrapper.Client connection;
         static void Main(string[] args)
-        {
+        {   
+            // This timer will run while the user is being prompted for input
+            // after a set time as defined in Interval, the program will shut down
+            // if the user inputs any values the timer is reset
+            timer = new System.Timers.Timer();
+            timer.Interval = 50000;         
+            timer.Elapsed += onTimedEvent;
+            timer.AutoReset = true;
+            timer.Enabled = true;     
+
             // start a connection based on user input
-            Packages.ClientWrapper.Client connection = InitializeSession.initialize(args);
+            connection = InitializeSession.initialize(args);
             Cli cli = new Cli();
             ConsoleParser commandParser = new ConsoleParser.Builder()
                 .withCommand("exit", "exits the program", (List<string> exitArgs) => {
@@ -116,7 +130,19 @@ namespace FtpCli
                     Console.Write("Unable to process command: ");
                     Console.WriteLine(e);
                 }
+                resetTimer();
             }
+        }
+        private static void onTimedEvent(Object source, System.Timers.ElapsedEventArgs e){
+            Console.WriteLine("Connection Timeout");
+            connection.Disconnect();
+            Environment.Exit(0);
+        }
+        
+        // This function will reset the timer countdown
+        private static void resetTimer(){
+            timer.Stop();
+            timer.Start();
         }
     }
 }
