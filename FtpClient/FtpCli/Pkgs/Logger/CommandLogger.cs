@@ -13,11 +13,23 @@ namespace FtpCli.Pkgs.Logger
     private int _numFileLines;
     // *nix: _logFilePath = $HOME/.config
     // Windows: Users ApplicationData folder (don't know the path)
+    private string _logFileDir;
     private string _logFilePath;
 
     public CommandLogger()
     {
-      _logFilePath = _findLogFilePath();
+      // A bit messy, FIX?
+      _logFileDir = Path.Combine(
+        Environment
+          .GetFolderPath(
+            Environment
+              .SpecialFolder
+              .ApplicationData
+          ),
+          "ftpcli-410/"
+     );
+
+      _logFilePath = _findLogFilePath(_logFileDir);
       _cursor = 0;
       _numFileLines = 0;
     }
@@ -27,41 +39,72 @@ namespace FtpCli.Pkgs.Logger
       _cleanLogFilePath();
     }
 
-    private string _findLogFilePath()
+    // PRIVATE *******************************************
+
+    private string _findLogFilePath(string dirPath)
     {
       // Find home dir
-      string appDataDir = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-      string logDirPath = appDataDir + "/ftpcli-410/";
-      string logFilePath = logDirPath + ".history";
+      string logFilePath = Path.Combine(dirPath, ".history");
 
-      if(!Directory.Exists(logDirPath))
+      if(!Directory.Exists(dirPath))
       {
-        Directory.CreateDirectory(logDirPath);
+        Directory.CreateDirectory(dirPath);
       }
 
       if(!File.Exists(logFilePath))
       {
-        File.Create(logFilePath);
+        File.Create(logFilePath).Close();
       }
-     
       return logFilePath;
     }
 
     private void _cleanLogFilePath()
     {
-      // Delete the file
+      if(File.Exists(_logFilePath))
+      {
+        File.Delete(_logFilePath);
+      }
     }
 
     private void _writeDataToFile(string cmd)
     {
       // Write the command to the specified file
-       
+      using (StreamWriter writer = File.AppendText(_logFilePath))
+      {
+        writer.WriteLine(cmd);
+      }
+      // Need to make sure the upper bound
+      // stays up to date
+      _incLineNum();
     }
 
-    private string _dataAtCursor()
+    private string _readLineAtCursor()
     {
       // Check to see if within cursor bounds
+      int currentRow = 0;
+      foreach(string line in File.ReadLines(_logFilePath))
+      {
+        // Need to check to make sure
+        // the file is not reading out of bounds
+        if(currentRow == _numFileLines)
+        {
+          return "";
+        }
+
+        if(currentRow == _cursor)
+        {
+          return line;
+        } 
+        currentRow += 1;
+      }
+
       return "";
+    }
+
+    private void _incLineNum()
+    {
+      _numFileLines += 1;
+      _cursor = _numFileLines; // Want to make the cursor reset each time a line is added
     }
 
     // Will move the cursor towards the most
@@ -71,7 +114,7 @@ namespace FtpCli.Pkgs.Logger
       _cursor += 1;
       if(_cursor > _numFileLines)
       {
-        _numFileLines = _cursor;
+        _cursor = _numFileLines;
       }
     }
 
@@ -87,6 +130,8 @@ namespace FtpCli.Pkgs.Logger
       _cursor -= 1; 
     }
 
+    // PUBLIC ****************************************************
+
     public string FilePath()
     {
       return _logFilePath;
@@ -101,18 +146,24 @@ namespace FtpCli.Pkgs.Logger
     public string PrevLogItem()
     {
       _decCursor();
-      return _dataAtCursor(); 
+      return _readLineAtCursor(); 
     }
 
     public string NextLogItem()
     {
       _incCursor();
-      return _dataAtCursor();
+      return _readLineAtCursor();
+    }
+
+    public int NumOfLines()
+    {
+      return _numFileLines; 
     }
 
     public void DeleteLogs()
     {
       // Delete
+      _cleanLogFilePath();
     }
   }
 }
