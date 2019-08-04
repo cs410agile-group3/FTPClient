@@ -27,6 +27,8 @@ namespace FtpCli
             Cli cli = new Cli();
             ConsoleParser commandParser = new ConsoleParser.Builder()
                 .withCommand("exit", "exits the program", (List<string> exitArgs) => {
+                    timer.Stop();
+                    timer.Dispose();
                     connection.Disconnect();
                     Environment.Exit(0);
                 })
@@ -135,6 +137,8 @@ namespace FtpCli
         }
         private static void onTimedEvent(Object source, System.Timers.ElapsedEventArgs e){
             Console.WriteLine("Connection Timeout");
+            timer.Stop();
+            timer.Dispose();
             connection.Disconnect();
             Environment.Exit(0);
         }
