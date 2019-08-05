@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Text;
 using ConsoleParserNamespace;
 using System.Collections.Generic;
+using FtpCli.Packages.ClientWrapper;
+using FtpCli.Packages.ConsoleEventLoop;
 
 namespace FtpCli
 {
@@ -9,9 +12,12 @@ namespace FtpCli
         static void Main(string[] args)
         {
             // start a connection based on user input
-            Packages.ClientWrapper.Client connection = InitializeSession.initialize(args);
+            Client connection = InitializeSession.initialize(args);
             Cli cli = new Cli();
             ConsoleParser commandParser = new ConsoleParser.Builder()
+                .withCommand("", "Empty Command", (List<string> emptyArgs) => {
+                    // Do nothing
+                })
                 .withCommand("exit", "exits the program", (List<string> exitArgs) => {
                     connection.Disconnect();
                     Environment.Exit(0);
@@ -32,7 +38,7 @@ namespace FtpCli
                     connection.Rename(source, dest);
                 })
                 .withCommand("echo", "print argument to screen", (List<string> echoArgs) => {
-                    Console.WriteLine(echoArgs[0]);
+                    Console.WriteLine(string.Join(" ", echoArgs));
                 })
                 .withCommand("localrename", "Rename a local file.", (List<string> a) => {
                     Console.WriteLine(cli.LocalRename(a[0],a[1]));
@@ -104,15 +110,9 @@ namespace FtpCli
                     connection.ChangePermissions(chmodArgs[0], Convert.ToInt16(chmodArgs[1]));
                 })
                 .build();
-            while (true) {
-                try {
-                    Console.Write(">> ");
-                    commandParser.executeCommand(Console.ReadLine());
-                } catch (Exception e) {
-                    Console.Write("Unable to process command: ");
-                    Console.WriteLine(e);
-                }
-            }
+
+            EventLoop evlp = new EventLoop();
+            evlp.Run(commandParser.executeCommand);
         }
     }
 }

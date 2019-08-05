@@ -1,7 +1,7 @@
 using System;
 using System.IO;
 
-namespace FtpCli.Pkgs.Logger
+namespace FtpCli.Packages.Logger
 {
   // This will append to the end of
   // a file the last command
@@ -51,10 +51,9 @@ namespace FtpCli.Pkgs.Logger
         Directory.CreateDirectory(dirPath);
       }
 
-      if(!File.Exists(logFilePath))
-      {
-        File.Create(logFilePath).Close();
-      }
+      // This Op is destructive
+      // and will erase previous file
+      File.Create(logFilePath).Close();
       return logFilePath;
     }
 

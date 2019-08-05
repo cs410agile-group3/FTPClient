@@ -1,5 +1,5 @@
 using System;
-using FtpCli.Pkgs.Logger;
+using FtpCli.Packages.Logger;
 using Xunit;
 
 namespace CmdLogger.UnitTests

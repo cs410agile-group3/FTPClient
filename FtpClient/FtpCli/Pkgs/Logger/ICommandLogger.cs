@@ -1,4 +1,4 @@
-namespace FtpCli.Pkgs.Logger
+namespace FtpCli.Packages.Logger
 {
   public interface ILogger
   {
