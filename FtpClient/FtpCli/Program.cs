@@ -130,8 +130,10 @@ namespace FtpCli
                 })
                 .build();
 
-            EventLoop evlp = new EventLoop();
-            evlp.Run(commandParser.executeCommand, timer);
+            // Dont need to assign this to anything, as Run is
+            // the only public method and everything
+            // needed is passed in.
+            new EventLoop().Run(commandParser.executeCommand, timer);
         }
 
         private static void onTimedEvent(Object source, System.Timers.ElapsedEventArgs e){
