@@ -146,35 +146,49 @@ namespace FtpCli.Packages.ClientWrapper
         }
 
 
-    void UploadDirectory(SftpClient client, string localPathup, string remotePathup)
-    {
-      Console.WriteLine("Uploading directory {0} to {1}", localPathup, remotePathup);
-
-      IEnumerable infos = new DirectoryInfo(localPathup).EnumerateFileSystemInfos();
-      foreach (FileSystemInfo info in infos)
-      {
-        if (info.Attributes.HasFlag(FileAttributes.Directory))
+        void UploadDirectory(SftpClient client, string localPathup, string remotePathup)
         {
-          string subPath = remotePathup + "/" + info.Name;
-          if (!client.Exists(subPath))
-            {
-                client.CreateDirectory(subPath);
-            }
-            UploadDirectory(client, info.FullName, remotePathup + "/" + info.Name);
-        }
-        else
-        {
-            using (Stream fileStream = new FileStream(info.FullName, FileMode.Open))
-            {
-                Console.WriteLine(
-                    "Uploading {0} ({1:N0} bytes)",
-                    info.FullName, ((FileInfo)info).Length);
+            Console.WriteLine("Uploading directory {0} to {1}", localPathup, remotePathup);
 
-                client.UploadFile(fileStream, remotePathup + "/" + info.Name);
+            IEnumerable infos = new DirectoryInfo(localPathup).EnumerateFileSystemInfos();
+            foreach (FileSystemInfo info in infos)
+            {
+                if (info.Attributes.HasFlag(FileAttributes.Directory))
+                {
+                    string subPath = remotePathup + "/" + info.Name;
+                    if (!client.Exists(subPath))
+                    {
+                        client.CreateDirectory(subPath);
+                    }
+                    UploadDirectory(client, info.FullName, remotePathup + "/" + info.Name);
+                }
+                else
+                {
+                    using (Stream fileStream = new FileStream(info.FullName, FileMode.Open))
+                    {
+                        Console.WriteLine(
+                            "Uploading {0} ({1:N0} bytes)",
+                            info.FullName, ((FileInfo)info).Length);
+                        client.UploadFile(fileStream, remotePathup + "/" + info.Name);
+                    }
+                }
             }
         }
-    }
-    }
 
+        public void PutMultipleFile(List<string> putArgs) 
+        {   
+            string dest = putArgs[putArgs.Count - 1];
+
+            try {
+                foreach (string src in putArgs) {
+
+                    if (src != dest){
+                        PutFile(src, dest);
+                    }
+                }
+            } catch {
+                Console.WriteLine($"Files or destination do not exist.");
+            }
+        }
     }
 }
