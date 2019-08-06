@@ -1,5 +1,6 @@
 using System;
 using System.Text;
+using System.Timers;
 using FtpCli.Packages.Logger;
 
 namespace FtpCli.Packages.ConsoleEventLoop
@@ -7,6 +8,7 @@ namespace FtpCli.Packages.ConsoleEventLoop
     public class EventLoop
     {
   
+        private static Timer _timer;
         private StringBuilder consoleBuffer;
         private CommandLogger _logger;
         private ConsoleKeyInfo keyInfo;
@@ -19,6 +21,12 @@ namespace FtpCli.Packages.ConsoleEventLoop
             _logger = new CommandLogger();
         }
 
+        // This function will reset the timer countdown
+        private static void _resetTimer(){
+            _timer.Stop();
+            _timer.Start();
+        }
+        
         private void _refreshConsole()
         {
             // These values are set after '>> ' is
@@ -31,9 +39,11 @@ namespace FtpCli.Packages.ConsoleEventLoop
             Console.SetCursorPosition(consoleLeftCursor, consoleTopCursor);
         }
 
-        public void Run(Action<string> execCmdFn)
+        public void Run(Action<string> execCmdFn, object timer)
         {
+            _timer = (Timer)timer;
             Console.TreatControlCAsInput = true;
+
             while (true) 
             {
                   try 
@@ -131,6 +141,7 @@ namespace FtpCli.Packages.ConsoleEventLoop
                       // in Program.cs
                       execCmdFn(consoleBuffer.ToString());
                       consoleBuffer.Clear();
+                      _resetTimer();
 
                 } catch (Exception) {
                     Console.WriteLine("Unable to process command: {0}", consoleBuffer.ToString());            

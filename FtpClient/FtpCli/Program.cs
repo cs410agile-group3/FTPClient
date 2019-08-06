@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Text;
+using System.Timers;
 using ConsoleParserNamespace;
 using System.Collections.Generic;
 using FtpCli.Packages.ClientWrapper;
@@ -9,16 +9,31 @@ namespace FtpCli
 {
     class Program
     {
+        // Timer to shutdown program if idle
+        private static Timer timer;
+        private static Client connection;
+        
         static void Main(string[] args)
-        {
+        {   
+            // This timer will run while the user is being prompted for input
+            // after a set time as defined in Interval, the program will shut down
+            // if the user inputs any values the timer is reset
+            timer = new Timer();
+            timer.Interval = 50000;         
+            timer.Elapsed += onTimedEvent;
+            timer.AutoReset = true;
+            timer.Enabled = true;     
+
             // start a connection based on user input
-            Client connection = InitializeSession.initialize(args);
+            connection = InitializeSession.initialize(args);
             Cli cli = new Cli();
             ConsoleParser commandParser = new ConsoleParser.Builder()
                 .withCommand("", "Empty Command", (List<string> emptyArgs) => {
                     // Do nothing
                 })
                 .withCommand("exit", "exits the program", (List<string> exitArgs) => {
+                    timer.Stop();
+                    timer.Dispose();
                     connection.Disconnect();
                     Environment.Exit(0);
                 })
@@ -103,8 +118,12 @@ namespace FtpCli
                     "put",
                     "put [src] [dest] : Puts file from local (src) and writes it to remote (dest)",
                     (List<string> putArgs) => {
-                        if (putArgs.Count != 2) throw new Exception("Must provide source and destination");
-                        connection.PutFile(putArgs[0], putArgs[1]);
+                        if (putArgs.Count < 2) throw new Exception("Must provide source and destination");
+
+                        if(putArgs.Count == 2)
+                            connection.PutFile(putArgs[0], putArgs[1]);
+                        else
+                            connection.PutMultipleFile(putArgs);
                  })
                 .withCommand("chmod", "exits the program", (List<string> chmodArgs) => {
                     connection.ChangePermissions(chmodArgs[0], Convert.ToInt16(chmodArgs[1]));
@@ -112,7 +131,21 @@ namespace FtpCli
                 .build();
 
             EventLoop evlp = new EventLoop();
-            evlp.Run(commandParser.executeCommand);
+            evlp.Run(commandParser.executeCommand, timer);
+        }
+
+        private static void onTimedEvent(Object source, System.Timers.ElapsedEventArgs e){
+            Console.WriteLine("Connection Timeout");
+            timer.Stop();
+            timer.Dispose();
+            connection.Disconnect();
+            Environment.Exit(0);
+        }
+        
+        // This function will reset the timer countdown
+        private static void resetTimer(){
+            timer.Stop();
+            timer.Start();
         }
     }
 }
