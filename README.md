@@ -45,7 +45,11 @@ In the FtpCli/ directory:
 
 > This will default run the 'Program.cs' file. You can also run the program with the following parameters. An invalid number of parameters will result in user prompts for login parameters:
 
-  `$> dotnet run [servername] [port] [username] [password]`
+  `$> dotnet run -server [servername] -port [port] -user [username]`
+ 
+ You can optionally pass in `-save [alias]` to save the connection information under the given alias. Once it is saved, it can be recalled using:
+
+  `$> dotnet run [alias]`
 
 Example Usage:
 
