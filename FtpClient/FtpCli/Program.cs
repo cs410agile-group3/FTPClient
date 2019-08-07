@@ -2,6 +2,8 @@
 using System.Timers;
 using ConsoleParserNamespace;
 using System.Collections.Generic;
+using FtpCli.Packages.ClientWrapper;
+using FtpCli.Packages.ConsoleEventLoop;
 
 namespace FtpCli
 {
@@ -9,14 +11,14 @@ namespace FtpCli
     {
         // Timer to shutdown program if idle
         private static Timer timer;
-
-        private static Packages.ClientWrapper.Client connection;
+        private static Client connection;
+        
         static void Main(string[] args)
         {   
             // This timer will run while the user is being prompted for input
             // after a set time as defined in Interval, the program will shut down
             // if the user inputs any values the timer is reset
-            timer = new System.Timers.Timer();
+            timer = new Timer();
             timer.Interval = 50000;         
             timer.Elapsed += onTimedEvent;
             timer.AutoReset = true;
@@ -26,6 +28,9 @@ namespace FtpCli
             connection = InitializeSession.initialize(args);
             Cli cli = new Cli();
             ConsoleParser commandParser = new ConsoleParser.Builder()
+                .withCommand("", "Empty Command", (List<string> emptyArgs) => {
+                    // Do nothing
+                })
                 .withCommand("exit", "exits the program", (List<string> exitArgs) => {
                     timer.Stop();
                     timer.Dispose();
@@ -48,7 +53,7 @@ namespace FtpCli
                     connection.Rename(source, dest);
                 })
                 .withCommand("echo", "print argument to screen", (List<string> echoArgs) => {
-                    Console.WriteLine(echoArgs[0]);
+                    Console.WriteLine(string.Join(" ", echoArgs));
                 })
                 .withCommand("localrename", "Rename a local file.", (List<string> a) => {
                     Console.WriteLine(cli.LocalRename(a[0],a[1]));
@@ -124,17 +129,13 @@ namespace FtpCli
                     connection.ChangePermissions(chmodArgs[0], Convert.ToInt16(chmodArgs[1]));
                 })
                 .build();
-            while (true) {
-                try {
-                    Console.Write(">> ");
-                    commandParser.executeCommand(Console.ReadLine());
-                } catch (Exception e) {
-                    Console.Write("Unable to process command: ");
-                    Console.WriteLine(e);
-                }
-                resetTimer();
-            }
+
+            // Dont need to assign this to anything, as Run is
+            // the only public method and everything
+            // needed is passed in.
+            new EventLoop().Run(commandParser.executeCommand, timer);
         }
+
         private static void onTimedEvent(Object source, System.Timers.ElapsedEventArgs e){
             Console.WriteLine("Connection Timeout");
             timer.Stop();
