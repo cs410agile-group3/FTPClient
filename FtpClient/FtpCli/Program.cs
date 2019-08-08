@@ -128,6 +128,22 @@ namespace FtpCli
                 .withCommand("chmod", "exits the program", (List<string> chmodArgs) => {
                     connection.ChangePermissions(chmodArgs[0], Convert.ToInt16(chmodArgs[1]));
                 })
+
+                .withCommand("cp","Copy a file from a source to a destination",(List<string> cp) =>{
+                    Console.WriteLine("Enter in the directory you want to copy");
+                    String source = Console.ReadLine();
+                    if(source.Length == 0){
+                        Console.WriteLine("Source entered is empty");
+                        Environment.Exit(1); 
+                    }
+                    Console.WriteLine("Enter in the destination of the directory you want it to be copied to");
+                    String dest = Console.ReadLine();
+                    if(dest.Length == 0){
+                        Console.WriteLine("Destination entered is empty");
+                        Environment.Exit(1); 
+                    }            
+                    connection.CopyFile(source,dest);
+                })
                 .build();
 
             // Dont need to assign this to anything, as Run is
