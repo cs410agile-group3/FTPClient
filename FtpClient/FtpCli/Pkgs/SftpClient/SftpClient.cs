@@ -143,5 +143,18 @@ namespace FtpCli.Packages.ClientWrapper
                 Console.WriteLine($"Files or destination do not exist.");
             }
         }
+
+        public void CopyFile(String src, String dest){
+            var fsIn = _client.OpenRead(src);
+            var fsOut = _client.OpenWrite(dest);
+
+            int data;
+            while ((data = fsIn.ReadByte()) != -1)
+                fsOut.WriteByte((byte)data);
+
+            fsOut.Flush();
+            fsIn.Close();
+            fsOut.Close();
+        }
     }
 }
